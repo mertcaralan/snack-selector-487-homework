@@ -1,27 +1,39 @@
 <resources>
     <string name="app_name">AtıştırmalıkSeç</string>
 
-    <string name="home_title">Atıştırmalığını Seç!</string>
-    <string name="btn_start">Başla</string>
-    <string name="select_category">Kategori Seç:</string>
-    <string name="intensity">Yoğunluk:</string>
-    <string name="btn_preview">Önizleme</string>
-    <string name="btn_continue">Devam</string>
-    <string name="summary_title">Seçiminiz</string>
-    <string name="btn_confirm">Onayla</string>
-    <string name="btn_cancel">İptal</string>
-    <string name="alert_message">Seçiminizi onaylıyor musunuz?</string>
-    <string name="toast_message">İpucu: Kaydırarak ayarlayın!</string>
-    <string name="snackbar_warning">Lütfen bir kategori seçin!</string>
-    <string name="result_saved">Seçim kaydedildi!</string>
+    <string name="home_title">Canın Ne İstiyor?</string>
+    <string name="btn_start">Atıştırmalığımı Bul</string>
+    <string name="select_mood">Nasıl hissediyorsun?</string>
+    <string name="select_time">Saat kaç?</string>
+    <string name="hunger_level">Açlık Seviyesi:</string>
+    <string name="btn_preview">Öneriyi Gör</string>
+    <string name="btn_continue">Öneri Al</string>
+    <string name="summary_title">Senin İçin Mükemmel</string>
+    <string name="btn_confirm">Harika!</string>
+    <string name="btn_cancel">Tekrar Dene</string>
+    <string name="alert_message">Bu öneriyi beğendin mi?</string>
+    <string name="toast_message">İpucu: Açlık seviyeni ayarla!</string>
+    <string name="snackbar_warning">Lütfen ruh hali ve zaman seç!</string>
+    <string name="result_saved">Öneri kaydedildi!</string>
 
+    <!-- Dil Değiştirme -->
     <string name="btn_language">🌐 EN</string>
     <string name="toast_language_changed">Dil İngilizce olarak değiştirildi</string>
 
-    <string-array name="categories">
-        <item>Tatlı</item>
-        <item>Tuzlu</item>
-        <item>Sağlıklı</item>
-        <item>İçecek</item>
+    <!-- Mood Options -->
+    <string-array name="moods">
+        <item>Yorgun 😴</item>
+        <item>Mutlu 😊</item>
+        <item>Stresli 😰</item>
+        <item>Enerjik ⚡</item>
+        <item>Üzgün 😢</item>
+    </string-array>
+
+    <!-- Time of Day Options -->
+    <string-array name="times">
+        <item>Sabah 🌅</item>
+        <item>Öğleden Sonra ☀️</item>
+        <item>Akşam 🌆</item>
+        <item>Gece 🌙</item>
     </string-array>
 </resources>

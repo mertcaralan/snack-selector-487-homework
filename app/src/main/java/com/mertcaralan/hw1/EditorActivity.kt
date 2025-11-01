@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -18,51 +17,61 @@ import com.mertcaralan.hw1.databinding.ActivityEditorBinding
 class EditorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditorBinding
-    private var selectedCategory: String = ""
-    private var intensity: Int = 50
+    private var selectedMood: String = ""
+    private var selectedTime: String = ""
+    private var hungerLevel: Int = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupSpinner()
+        setupSpinners()
         setupSeekBar()
         setupButtons()
     }
 
-    private fun setupSpinner() {
-        val categories = resources.getStringArray(R.array.categories)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerCategory.adapter = adapter
+    private fun setupSpinners() {
+        // Mood Spinner
+        val moods = resources.getStringArray(R.array.moods)
+        val moodAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, moods)
+        moodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerMood.adapter = moodAdapter
 
-        // Spinner event handler
-        binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spinnerMood.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedCategory = categories[position]
+                selectedMood = moods[position]
             }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
+        // Time Spinner
+        val times = resources.getStringArray(R.array.times)
+        val timeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, times)
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTime.adapter = timeAdapter
+
+        binding.spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedTime = times[position]
+            }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
     private fun setupSeekBar() {
-        // SeekBar event handler - ImageView'i kontrol eder
-        binding.seekBarIntensity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekBarHunger.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                intensity = progress
-                binding.tvIntensityValue.text = intensity.toString()
+                hungerLevel = progress
+                binding.tvHungerValue.text = hungerLevel.toString()
 
-                // SeekBar ile ImageView'in alpha ve scale'ini kontrol et
+                // SeekBar ile ImageView kontrolü
                 val alpha = 0.3f + (progress / 100f) * 0.7f
                 val scale = 0.6f + (progress / 100f) * 0.4f
-
                 binding.ivPreview.alpha = alpha
                 binding.ivPreview.scaleX = scale
                 binding.ivPreview.scaleY = scale
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -74,19 +83,20 @@ class EditorActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.toast_message), Toast.LENGTH_SHORT).show()
         }
 
-        // Preview butonu - Custom Dialog göster
+        // Preview butonu - Custom Dialog
         binding.btnPreview.setOnClickListener {
-            if (selectedCategory.isEmpty()) {
+            if (selectedMood.isEmpty() || selectedTime.isEmpty()) {
                 Snackbar.make(binding.rootLayout, getString(R.string.snackbar_warning),
                     Snackbar.LENGTH_SHORT).show()
             } else {
-                showCustomDialog()
+                val (recommendation, emoji) = generateRecommendation()
+                showCustomDialog(recommendation, emoji)
             }
         }
 
-        // Continue butonu - SummaryActivity'ye geç
+        // Continue butonu
         binding.btnContinue.setOnClickListener {
-            if (selectedCategory.isEmpty()) {
+            if (selectedMood.isEmpty() || selectedTime.isEmpty()) {
                 Snackbar.make(binding.rootLayout, getString(R.string.snackbar_warning),
                     Snackbar.LENGTH_LONG).show()
             } else {
@@ -95,18 +105,74 @@ class EditorActivity : AppCompatActivity() {
         }
     }
 
-    private fun showCustomDialog() {
+    private fun generateRecommendation(): Pair<String, String> {
+        // ÖNERİ MANTĞI: Mood + Time + Hunger Level
+        return when {
+            // TIRED (Yorgun)
+            (selectedMood.contains("Tired") || selectedMood.contains("Yorgun")) &&
+                    (selectedTime.contains("Morning") || selectedTime.contains("Sabah")) -> {
+                if (hungerLevel > 60) "Strong Coffee ☕ & Croissant 🥐" to "☕"
+                else "Green Tea 🍵 & Toast 🍞" to "🍵"
+            }
+            (selectedMood.contains("Tired") || selectedMood.contains("Yorgun")) &&
+                    (selectedTime.contains("Afternoon") || selectedTime.contains("Öğleden")) -> {
+                "Energy Bar 🍫 & Orange Juice 🍊" to "🍫"
+            }
+            (selectedMood.contains("Tired") || selectedMood.contains("Yorgun")) -> {
+                "Herbal Tea 🫖 & Honey 🍯" to "🫖"
+            }
+
+            // HAPPY (Mutlu)
+            (selectedMood.contains("Happy") || selectedMood.contains("Mutlu")) &&
+                    (selectedTime.contains("Morning") || selectedTime.contains("Sabah")) -> {
+                "Pancakes 🥞 & Fresh Juice 🧃" to "🥞"
+            }
+            (selectedMood.contains("Happy") || selectedMood.contains("Mutlu")) -> {
+                if (hungerLevel > 70) "Ice Cream 🍦 & Waffle 🧇" to "🍦"
+                else "Cookies 🍪 & Milk 🥛" to "🍪"
+            }
+
+            // STRESSED (Stresli)
+            (selectedMood.contains("Stressed") || selectedMood.contains("Stresli")) -> {
+                if (hungerLevel > 60) "Dark Chocolate 🍫 & Almonds 🌰" to "🍫"
+                else "Chamomile Tea 🫖 & Crackers 🍘" to "🫖"
+            }
+
+            // ENERGETIC (Enerjik)
+            (selectedMood.contains("Energetic") || selectedMood.contains("Enerjik")) && hungerLevel > 70 -> {
+                "Protein Shake 🥤 & Banana 🍌" to "🥤"
+            }
+            (selectedMood.contains("Energetic") || selectedMood.contains("Enerjik")) -> {
+                "Smoothie 🍹 & Granola Bar 🍫" to "🍹"
+            }
+
+            // SAD (Üzgün)
+            (selectedMood.contains("Sad") || selectedMood.contains("Üzgün")) -> {
+                if (hungerLevel > 60) "Pizza 🍕 & Soda 🥤" to "🍕"
+                else "Hot Chocolate ☕ & Marshmallow 🍡" to "☕"
+            }
+
+            // HUNGRY Level Based (Genel açlık seviyesi)
+            hungerLevel > 80 -> "Burger 🍔 & Fries 🍟" to "🍔"
+            hungerLevel < 30 -> "Water 💧 & Apple 🍎" to "🍎"
+
+            // DEFAULT
+            else -> "Sandwich 🥪 & Tea 🍵" to "🥪"
+        }
+    }
+
+    private fun showCustomDialog(recommendation: String, emoji: String) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_preview)
 
-        val ivPreview = dialog.findViewById<ImageView>(R.id.ivDialogPreview)
-        val tvCategory = dialog.findViewById<TextView>(R.id.tvDialogCategory)
-        val tvIntensity = dialog.findViewById<TextView>(R.id.tvDialogIntensity)
+        val tvEmoji = dialog.findViewById<TextView>(R.id.tvDialogEmoji)
+        val tvRecommendation = dialog.findViewById<TextView>(R.id.tvDialogRecommendation)
+        val tvDetails = dialog.findViewById<TextView>(R.id.tvDialogDetails)
         val btnClose = dialog.findViewById<Button>(R.id.btnDialogClose)
 
-        ivPreview.setImageResource(android.R.drawable.btn_star_big_on)
-        tvCategory.text = "Category: $selectedCategory"
-        tvIntensity.text = "Intensity: $intensity"
+        tvEmoji.text = emoji
+        tvRecommendation.text = recommendation
+        tvDetails.text = "Mood: $selectedMood\nTime: $selectedTime\nHunger: $hungerLevel%"
 
         btnClose.setOnClickListener {
             dialog.dismiss()
@@ -116,12 +182,18 @@ class EditorActivity : AppCompatActivity() {
     }
 
     private fun goToSummary() {
+        val (recommendation, emoji) = generateRecommendation()
+
         val snackData = SnackData(
-            category = selectedCategory,
-            intensity = intensity
+            mood = selectedMood,
+            timeOfDay = selectedTime,
+            hungerLevel = hungerLevel,
+            recommendation = recommendation,
+            emoji = emoji
         )
 
         val intent = Intent(this, SummaryActivity::class.java)
+        intent.putExtra("username", "User#${System.currentTimeMillis() % 1000}") // Primitive data
         intent.putExtra("snack_data", snackData) // Parcelable object
         startActivity(intent)
     }

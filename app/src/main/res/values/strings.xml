@@ -1,27 +1,39 @@
 <resources>
-    <string name="app_name">SnackPicker</string>
+    <string name="app_name">SnackSelector</string>
 
-    <string name="home_title">Choose Your Snack!</string>
-    <string name="btn_start">Start</string>
-    <string name="select_category">Select Category:</string>
-    <string name="intensity">Intensity:</string>
-    <string name="btn_preview">Preview</string>
-    <string name="btn_continue">Continue</string>
-    <string name="summary_title">Your Selection</string>
-    <string name="btn_confirm">Confirm</string>
-    <string name="btn_cancel">Cancel</string>
-    <string name="alert_message">Confirm your choice?</string>
-    <string name="toast_message">Tip: Slide to adjust!</string>
-    <string name="snackbar_warning">Please select a category!</string>
-    <string name="result_saved">Selection saved!</string>
+    <string name="home_title">What Do You Feel Like?</string>
+    <string name="btn_start">Find My Snack</string>
+    <string name="select_mood">How are you feeling?</string>
+    <string name="select_time">What time is it?</string>
+    <string name="hunger_level">Hunger Level:</string>
+    <string name="btn_preview">Preview Suggestion</string>
+    <string name="btn_continue">Get Recommendation</string>
+    <string name="summary_title">Your Perfect Snack</string>
+    <string name="btn_confirm">I Love It!</string>
+    <string name="btn_cancel">Try Again</string>
+    <string name="alert_message">Are you sure this is what you want?</string>
+    <string name="toast_message">Tip: Adjust hunger level!</string>
+    <string name="snackbar_warning">Please select mood and time!</string>
+    <string name="result_saved">Recommendation saved!</string>
 
+    <!-- Dil Değiştirme -->
     <string name="btn_language">🌐 TR</string>
     <string name="toast_language_changed">Language changed to Turkish</string>
 
-    <string-array name="categories">
-        <item>Sweet</item>
-        <item>Salty</item>
-        <item>Healthy</item>
-        <item>Drink</item>
+    <!-- Mood Options -->
+    <string-array name="moods">
+        <item>Tired 😴</item>
+        <item>Happy 😊</item>
+        <item>Stressed 😰</item>
+        <item>Energetic ⚡</item>
+        <item>Sad 😢</item>
+    </string-array>
+
+    <!-- Time of Day Options -->
+    <string-array name="times">
+        <item>Morning 🌅</item>
+        <item>Afternoon ☀️</item>
+        <item>Evening 🌆</item>
+        <item>Night 🌙</item>
     </string-array>
 </resources>

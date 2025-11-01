@@ -16,16 +16,22 @@ class SummaryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Intent'ten veri al
-        val snackData = intent.getParcelableExtra<SnackData>("snack_data")
+        val username = intent.getStringExtra("username") ?: "Guest" // Primitive data
+        val snackData = intent.getParcelableExtra<SnackData>("snack_data") // Parcelable object
 
         // Verileri göster
         snackData?.let {
-            binding.tvCategory.text = "Category: ${it.category}"
-            binding.tvIntensity.text = "Intensity: ${it.intensity}"
-            binding.ivSummary.setImageResource(android.R.drawable.btn_star_big_on)
+            binding.tvEmoji.text = it.emoji
+            binding.tvRecommendation.text = it.recommendation
+            binding.tvDetails.text = """
+                User: $username
+                Mood: ${it.mood}
+                Time: ${it.timeOfDay}
+                Hunger Level: ${it.hungerLevel}%
+            """.trimIndent()
         }
 
-        // Confirm butonu - AlertDialog göster
+        // Confirm butonu - AlertDialog
         binding.btnConfirm.setOnClickListener {
             showConfirmationDialog()
         }

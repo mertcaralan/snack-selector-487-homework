@@ -5,6 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SnackData(
-    val category: String,
-    val intensity: Int
+    val mood: String,          // Ruh hali (Tired, Happy, etc.)
+    val timeOfDay: String,     // Gün zamanı (Morning, Afternoon, etc.)
+    val hungerLevel: Int,      // Açlık seviyesi (0-100)
+    val recommendation: String, // Öneri metni
+    val emoji: String          // Görsel emoji
 ) : Parcelable

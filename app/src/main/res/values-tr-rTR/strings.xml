@@ -16,11 +16,9 @@
     <string name="snackbar_warning">Lütfen ruh hali ve zaman seç!</string>
     <string name="result_saved">Öneri kaydedildi!</string>
 
-    <!-- Dil Değiştirme -->
     <string name="btn_language">🌐 EN</string>
     <string name="toast_language_changed">Dil İngilizce olarak değiştirildi</string>
 
-    <!-- Mood Options -->
     <string-array name="moods">
         <item>Yorgun 😴</item>
         <item>Mutlu 😊</item>
@@ -29,7 +27,6 @@
         <item>Üzgün 😢</item>
     </string-array>
 
-    <!-- Time of Day Options -->
     <string-array name="times">
         <item>Sabah 🌅</item>
         <item>Öğleden Sonra ☀️</item>

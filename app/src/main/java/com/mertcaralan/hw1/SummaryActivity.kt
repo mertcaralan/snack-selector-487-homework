@@ -15,11 +15,9 @@ class SummaryActivity : AppCompatActivity() {
         binding = ActivitySummaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Intent'ten veri al
-        val username = intent.getStringExtra("username") ?: "Guest" // Primitive data
-        val snackData = intent.getParcelableExtra<SnackData>("snack_data") // Parcelable object
+        val username = intent.getStringExtra("username") ?: "Guest"
+        val snackData = intent.getParcelableExtra<SnackData>("snack_data")
 
-        // Verileri göster
         snackData?.let {
             binding.tvEmoji.text = it.emoji
             binding.tvRecommendation.text = it.recommendation
@@ -31,7 +29,6 @@ class SummaryActivity : AppCompatActivity() {
             """.trimIndent()
         }
 
-        // Confirm butonu - AlertDialog
         binding.btnConfirm.setOnClickListener {
             showConfirmationDialog()
         }
@@ -42,7 +39,7 @@ class SummaryActivity : AppCompatActivity() {
             .setTitle(getString(R.string.summary_title))
             .setMessage(getString(R.string.alert_message))
             .setPositiveButton(getString(R.string.btn_confirm)) { dialog, _ ->
-                // Geri veri döndür (Activity Result)
+
                 val resultIntent = Intent()
                 resultIntent.putExtra("result_message", getString(R.string.result_saved))
                 setResult(RESULT_OK, resultIntent)

@@ -14,12 +14,10 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    // Dil değiştirme için attachBaseContext
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getLanguage(newBase)))
     }
 
-    // Activity Result Launcher (geri dönüş için)
     private val editorLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -35,17 +33,14 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Başlığa blink animasyonu uygula
         val blinkAnim = AnimationUtils.loadAnimation(this, R.anim.blink)
         binding.tvTitle.startAnimation(blinkAnim)
 
-        // Start butonu - EditorActivity'ye git
         binding.btnStart.setOnClickListener {
             val intent = Intent(this, EditorActivity::class.java)
             editorLauncher.launch(intent)
         }
 
-        // Dil değiştirme butonu
         binding.btnLanguage.setOnClickListener {
             changeLanguage()
         }

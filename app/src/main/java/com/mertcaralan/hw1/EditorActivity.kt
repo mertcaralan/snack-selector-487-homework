@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.mertcaralan.hw1.databinding.ActivityEditorBinding
+import androidx.databinding.DataBindingUtil
 
 class EditorActivity : AppCompatActivity() {
 
@@ -23,8 +24,9 @@ class EditorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEditorBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_editor)
+
+        binding.hungerLevel = hungerLevel
 
         setupSpinners()
         setupSeekBar()
@@ -32,7 +34,7 @@ class EditorActivity : AppCompatActivity() {
     }
 
     private fun setupSpinners() {
-        // Mood Spinner
+
         val moods = resources.getStringArray(R.array.moods)
         val moodAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, moods)
         moodAdapter.setDropDownViewResource(R.layout.item_spinner_custom)
@@ -45,7 +47,6 @@ class EditorActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        // Time Spinner
         val times = resources.getStringArray(R.array.times)
         val timeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, times)
         timeAdapter.setDropDownViewResource(R.layout.item_spinner_custom)
@@ -63,9 +64,8 @@ class EditorActivity : AppCompatActivity() {
         binding.seekBarHunger.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 hungerLevel = progress
-                binding.tvHungerValue.text = hungerLevel.toString()
+                binding.hungerLevel = hungerLevel
 
-                // SeekBar ile ImageView kontrolü
                 val alpha = 0.3f + (progress / 100f) * 0.7f
                 val scale = 0.6f + (progress / 100f) * 0.4f
                 binding.ivPreview.alpha = alpha
@@ -78,12 +78,11 @@ class EditorActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        // Toast butonu
+
         binding.btnToast.setOnClickListener {
             Toast.makeText(this, getString(R.string.toast_message), Toast.LENGTH_SHORT).show()
         }
 
-        // Preview butonu - Custom Dialog
         binding.btnPreview.setOnClickListener {
             if (selectedMood.isEmpty() || selectedTime.isEmpty()) {
                 Snackbar.make(binding.rootLayout, getString(R.string.snackbar_warning),
@@ -94,7 +93,6 @@ class EditorActivity : AppCompatActivity() {
             }
         }
 
-        // Continue butonu
         binding.btnContinue.setOnClickListener {
             if (selectedMood.isEmpty() || selectedTime.isEmpty()) {
                 Snackbar.make(binding.rootLayout, getString(R.string.snackbar_warning),
@@ -106,9 +104,8 @@ class EditorActivity : AppCompatActivity() {
     }
 
     private fun generateRecommendation(): Pair<String, String> {
-        // ÖNERİ MANTĞI: Mood + Time + Hunger Level
+
         return when {
-            // TIRED (Yorgun)
             (selectedMood.contains("Tired") || selectedMood.contains("Yorgun")) &&
                     (selectedTime.contains("Morning") || selectedTime.contains("Sabah")) -> {
                 if (hungerLevel > 60) "Strong Coffee ☕ & Croissant 🥐" to "☕"
@@ -122,7 +119,6 @@ class EditorActivity : AppCompatActivity() {
                 "Herbal Tea 🫖 & Honey 🍯" to "🫖"
             }
 
-            // HAPPY (Mutlu)
             (selectedMood.contains("Happy") || selectedMood.contains("Mutlu")) &&
                     (selectedTime.contains("Morning") || selectedTime.contains("Sabah")) -> {
                 "Pancakes 🥞 & Fresh Juice 🧃" to "🥞"
@@ -132,13 +128,11 @@ class EditorActivity : AppCompatActivity() {
                 else "Cookies 🍪 & Milk 🥛" to "🍪"
             }
 
-            // STRESSED (Stresli)
             (selectedMood.contains("Stressed") || selectedMood.contains("Stresli")) -> {
                 if (hungerLevel > 60) "Dark Chocolate 🍫 & Almonds 🌰" to "🍫"
                 else "Chamomile Tea 🫖 & Crackers 🍘" to "🫖"
             }
 
-            // ENERGETIC (Enerjik)
             (selectedMood.contains("Energetic") || selectedMood.contains("Enerjik")) && hungerLevel > 70 -> {
                 "Protein Shake 🥤 & Banana 🍌" to "🥤"
             }
@@ -146,17 +140,14 @@ class EditorActivity : AppCompatActivity() {
                 "Smoothie 🍹 & Granola Bar 🍫" to "🍹"
             }
 
-            // SAD (Üzgün)
             (selectedMood.contains("Sad") || selectedMood.contains("Üzgün")) -> {
                 if (hungerLevel > 60) "Pizza 🍕 & Soda 🥤" to "🍕"
                 else "Hot Chocolate ☕ & Marshmallow 🍡" to "☕"
             }
 
-            // HUNGRY Level Based (Genel açlık seviyesi)
             hungerLevel > 80 -> "Burger 🍔 & Fries 🍟" to "🍔"
             hungerLevel < 30 -> "Water 💧 & Apple 🍎" to "🍎"
 
-            // DEFAULT
             else -> "Sandwich 🥪 & Tea 🍵" to "🥪"
         }
     }

@@ -48,6 +48,6 @@
         android:layout_height="150dp"
         android:layout_weight="1"
         android:contentDescription="Icon"
-        android:src="@android:drawable/btn_star_big_on" />
+        android:src="@drawable/cookie" />
 
 </LinearLayout>

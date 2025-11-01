@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">AtıştırmalıkSeç</string>
+
+    <string name="home_title">Atıştırmalığını Seç!</string>
+    <string name="btn_start">Başla</string>
+    <string name="select_category">Kategori Seç:</string>
+    <string name="intensity">Yoğunluk:</string>
+    <string name="btn_preview">Önizleme</string>
+    <string name="btn_continue">Devam</string>
+    <string name="summary_title">Seçiminiz</string>
+    <string name="btn_confirm">Onayla</string>
+    <string name="btn_cancel">İptal</string>
+    <string name="alert_message">Seçiminizi onaylıyor musunuz?</string>
+    <string name="toast_message">İpucu: Kaydırarak ayarlayın!</string>
+    <string name="snackbar_warning">Lütfen bir kategori seçin!</string>
+    <string name="result_saved">Seçim kaydedildi!</string>
+
+    <string name="btn_language">🌐 EN</string>
+    <string name="toast_language_changed">Dil İngilizce olarak değiştirildi</string>
+
+    <string-array name="categories">
+        <item>Tatlı</item>
+        <item>Tuzlu</item>
+        <item>Sağlıklı</item>
+        <item>İçecek</item>
+    </string-array>
+</resources>

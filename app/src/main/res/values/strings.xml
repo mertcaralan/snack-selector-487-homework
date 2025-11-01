@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SnackPicker</string>
+
+    <string name="home_title">Choose Your Snack!</string>
+    <string name="btn_start">Start</string>
+    <string name="select_category">Select Category:</string>
+    <string name="intensity">Intensity:</string>
+    <string name="btn_preview">Preview</string>
+    <string name="btn_continue">Continue</string>
+    <string name="summary_title">Your Selection</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="alert_message">Confirm your choice?</string>
+    <string name="toast_message">Tip: Slide to adjust!</string>
+    <string name="snackbar_warning">Please select a category!</string>
+    <string name="result_saved">Selection saved!</string>
+
+    <string name="btn_language">🌐 TR</string>
+    <string name="toast_language_changed">Language changed to Turkish</string>
+
+    <string-array name="categories">
+        <item>Sweet</item>
+        <item>Salty</item>
+        <item>Healthy</item>
+        <item>Drink</item>
+    </string-array>
+</resources>

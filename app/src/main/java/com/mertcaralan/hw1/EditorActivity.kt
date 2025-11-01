@@ -35,7 +35,7 @@ class EditorActivity : AppCompatActivity() {
         // Mood Spinner
         val moods = resources.getStringArray(R.array.moods)
         val moodAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, moods)
-        moodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        moodAdapter.setDropDownViewResource(R.layout.item_spinner_custom)
         binding.spinnerMood.adapter = moodAdapter
 
         binding.spinnerMood.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -48,7 +48,7 @@ class EditorActivity : AppCompatActivity() {
         // Time Spinner
         val times = resources.getStringArray(R.array.times)
         val timeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, times)
-        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        timeAdapter.setDropDownViewResource(R.layout.item_spinner_custom)
         binding.spinnerTime.adapter = timeAdapter
 
         binding.spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
